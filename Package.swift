@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "TechTalk_Library",
-    platforms: [
+    platforms: [ // 1. Add platforms
         .iOS(.v11)
     ],
     products: [
