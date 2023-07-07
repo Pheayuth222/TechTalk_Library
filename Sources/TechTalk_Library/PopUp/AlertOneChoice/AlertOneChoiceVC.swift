@@ -7,9 +7,9 @@
 
 import UIKit
 
-typealias Completion_Bool           = (Bool)            -> Void
+public typealias Completion_Bool           = (Bool)            -> Void
 
-class AlertOneChoiceVC: UIViewController {
+public class AlertOneChoiceVC: UIViewController {
 
     @IBOutlet weak var alertImage: UIImageView!
     @IBOutlet weak var alertTitle: UILabel!
@@ -31,7 +31,7 @@ class AlertOneChoiceVC: UIViewController {
     var confirmAction       : Completion_Bool = { _ in }
     var cancelAction        : Completion_Bool = { _ in }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         self.initialized()
         cancelButton.isHidden = isHide
@@ -53,7 +53,7 @@ class AlertOneChoiceVC: UIViewController {
     }
     
     //MARK: - Private Func
-    private func initialized() {
+    public func initialized() {
         alertImage?.image       = UIImage(named: imageString)
         alertTitle?.text        = titleString
         alertDescription?.text  = messageString
@@ -66,7 +66,7 @@ class AlertOneChoiceVC: UIViewController {
 
 extension UIViewController {
     //for pop up
-    func callCommonPopup(withStorybordName storyboard: String, identifier: String) -> UIViewController {
+    public func callCommonPopup(withStorybordName storyboard: String, identifier: String) -> UIViewController {
             let vc = UIStoryboard(name: storyboard, bundle: nil).instantiateViewController(withIdentifier: identifier)
             vc.modalPresentationStyle                       = .overFullScreen
             vc.modalTransitionStyle                         = .crossDissolve
@@ -75,7 +75,7 @@ extension UIViewController {
             return vc
         }
     
-    func customOneAlert(image:String, title: String, message:String, yesTitle: String, completion: @escaping Completion_Bool = {_ in}) {
+    public func customOneAlert(image:String, title: String, message:String, yesTitle: String, completion: @escaping Completion_Bool = {_ in}) {
         
         let vc = self.callCommonPopup(withStorybordName: "AlertOneChoiceSB", identifier: "AlertOneChoiceVC") as! AlertOneChoiceVC
         vc.imageString      = image
@@ -97,7 +97,7 @@ extension UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
     
-    func customTwoAlert(image:String, title: String, message:String, yesTitle: String, completion: @escaping Completion_Bool = {_ in}) {
+    public func customTwoAlert(image:String, title: String, message:String, yesTitle: String, completion: @escaping Completion_Bool = {_ in}) {
         
         let vc = self.callCommonPopup(withStorybordName: "AlertOneChoiceSB", identifier: "AlertOneChoiceVC") as! AlertOneChoiceVC
         vc.imageString      = image
