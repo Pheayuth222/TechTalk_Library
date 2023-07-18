@@ -279,7 +279,7 @@ public class DataAccecss {
         
         var url : URL!
          
-         url = URL(string: "\(baseUrl)/\(apiKey)")
+         url = URL(string: "\(urlStr)/\(apiKey)")
         
         var request         = URLRequest(url: url!)
         request.httpMethod  = httpMethod.rawValue
