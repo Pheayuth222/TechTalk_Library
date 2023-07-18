@@ -39,7 +39,7 @@ public struct TechTalk_Library {
   
     // Request data task with API and response data & error as completion
     public func fetch<I: Encodable, O: Decodable>(shouldShowLoading  : Bool = true,
-                                                  apiKey             : APIKey<Any>,
+                                                  apiKey             : String = "",
                                            urlStr             : String = "",
                                            httpMethod         : HTTPMethod = .POST,
                                            access_token       : String = "",
@@ -231,7 +231,7 @@ public struct TechTalk_Library {
     }
     
     //MARK: - GET REQUEST URL -
-    func getURLRequest<T: Encodable>(apiKey: APIKey<Any>,
+    func getURLRequest<T: Encodable>(apiKey: String = "",
                                              urlStr: String = "",
                                              body: T,
                                              httpMethod : HTTPMethod = .POST) -> URLRequest {
