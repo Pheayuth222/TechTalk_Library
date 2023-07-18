@@ -6,6 +6,8 @@ public struct TechTalk_Library {
     public init() {
     }
     
+    public var baseUrl : String = ""
+    
     func manualError(err: NSError) -> NSError {
         // Custom NSError
     #if DEBUG
@@ -240,6 +242,8 @@ public struct TechTalk_Library {
         }
         
         var url : URL!
+         
+         url = URL(string: "\(baseUrl)/\(apiKey)")
         
         var request         = URLRequest(url: url!)
         request.httpMethod  = httpMethod.rawValue
