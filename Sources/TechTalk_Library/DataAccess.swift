@@ -16,7 +16,7 @@ public class DataAccecss {
     
     // The Network access for request, response, upload and download task
     public static var sessionConfig    : URLSessionConfiguration!
-    public static var session          : URLSession!
+    public static var session          : URLSession?
     
     static var shared : DataAccecss = {
         // Timeout Configuration
@@ -96,7 +96,7 @@ public class DataAccecss {
                                          httpMethod : httpMethod)
         
 
-        DataAccecss.session.dataTask(with: request) { (data, response, error) in
+        DataAccecss.session?.dataTask(with: request) { (data, response, error) in
             
             //ShowLoadingimagView
             if shouldShowLoading {
