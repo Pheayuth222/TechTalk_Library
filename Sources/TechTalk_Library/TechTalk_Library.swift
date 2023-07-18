@@ -2,7 +2,7 @@ import UIKit
 
 public struct TechTalk_Library {
     public private(set) var text = "Hello, World!"
-
+    public enum APIKey {}
     public init() {
     }
     
@@ -36,7 +36,7 @@ public struct TechTalk_Library {
   
     // Request data task with API and response data & error as completion
     public func fetch<I: Encodable, O: Decodable>(shouldShowLoading  : Bool = true,
-                                           apiKey             : String = "",
+                                           apiKey             : APIKey,
                                            urlStr             : String = "",
                                            httpMethod         : HTTPMethod = .POST,
                                            access_token       : String = "",
@@ -52,12 +52,12 @@ public struct TechTalk_Library {
         }
         
 //        print("====> Access_Token \(access_token)")
-        
         let request = self.getURLRequest(apiKey     : apiKey,
                                          urlStr     : urlStr,
                                          body       : body,
                                          httpMethod : httpMethod)
         
+
         DataAccess.session.dataTask(with: request) { (data, response, error) in
             
             //ShowLoadingimagView
@@ -228,7 +228,7 @@ public struct TechTalk_Library {
     }
     
     //MARK: - GET REQUEST URL -
-    public func getURLRequest<T: Encodable>(apiKey: String = "",
+     func getURLRequest<T: Encodable>(apiKey: APIKey,
                                              urlStr: String = "",
                                              body: T,
                                              httpMethod : HTTPMethod = .POST) -> URLRequest {
@@ -240,15 +240,6 @@ public struct TechTalk_Library {
         }
         
         var url : URL!
-        
-//        if apiKey == .getSearchPayer || apiKey == .getBill || apiKey == .getPaymentInfo || apiKey == .getCreatePayer || apiKey == .getPayment || apiKey == .getCustomer{
-//            url = URL(string: "\(Shared.share.baseUrl ?? "")/\(apiKey.rawValue)\(urlStr)")
-//        } else if apiKey == .AppSetting {
-//            url = URL(string: "\(APIKey.AppSettingURL)\(APIKey.AppSetting.rawValue)\(APIKey.AppID)?os=iOS")
-//        } else {
-//            url = URL(string: "\(Shared.share.baseUrl ?? "")/\(apiKey.rawValue)")
-//        }
-        
         
         var request         = URLRequest(url: url!)
         request.httpMethod  = httpMethod.rawValue
