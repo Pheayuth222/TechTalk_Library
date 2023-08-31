@@ -6,9 +6,14 @@ public struct TechTalk_Library {
     public init() {
     }
     
-    public func alert(_ title: String? = nil,message: String? = nil) -> UIAlertController {
-        UIAlertController(title: title,message: message,preferredStyle: .alert)
-    }
+    public func customAlertPop(titleValue: String, mesString: String, viewController: UIViewController) {
+           let alertController = UIAlertController(title: titleValue, message: mesString, preferredStyle: .alert)
+
+           let defaultAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+           alertController.addAction(defaultAction)
+
+           viewController.present(alertController, animated: true, completion: nil)
+       }
     
 }
 

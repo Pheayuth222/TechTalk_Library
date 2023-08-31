@@ -5,7 +5,13 @@ public struct MyLibrary {
     public init() {
     }
     
-    private func alert(_ title: String? = nil,message: String? = nil) -> UIAlertController {
-        UIAlertController(title: title,message: message,preferredStyle: .alert)
+    public func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        
+        if let topViewController = UIApplication.shared.keyWindow?.rootViewController {
+            topViewController.present(alertController, animated: true, completion: nil)
+        }
     }
 }
