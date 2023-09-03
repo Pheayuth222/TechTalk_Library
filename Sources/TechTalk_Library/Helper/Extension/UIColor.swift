@@ -1,6 +1,6 @@
 import UIKit
 
-extension UIColor {
+public extension UIColor {
     
     var isLight: Bool {
         guard let components = cgColor.components else { return false }
@@ -209,7 +209,8 @@ extension UIColor {
         return UIColor(hexString: "282828").withAlphaComponent(0.4)
     }
 }
-extension CGFloat {
+
+public extension CGFloat {
     static func random() -> CGFloat {
         return CGFloat(arc4random()) / CGFloat(UInt32.max)
     }
