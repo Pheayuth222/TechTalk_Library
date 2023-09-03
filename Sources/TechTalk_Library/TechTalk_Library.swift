@@ -343,3 +343,461 @@ public extension CGFloat {
     }
 }
 
+// MARK: - UIVIew
+
+public let HRToastDefaultDuration  =   3.0
+public let HRToastFadeDuration     =   0.3
+public let HRToastHorizontalMargin : CGFloat  =   17.0
+public let HRToastVerticalMargin   : CGFloat  =   17.0
+
+public let HRToastPositionDefault  =   "bottom"
+public let HRToastPositionTop      =   "top"
+public let HRToastPositionCenter   =   "center"
+public let HRToastPositionCustom   =   "custom"
+ // activity
+public let HRToastActivityPositionDefault    = "center"
+
+ // image size
+public let HRToastImageViewWidth :  CGFloat  = 80.0
+public let HRToastImageViewHeight:  CGFloat  = 80.0
+ 
+ // label setting
+public let HRToastMaxWidth       :  CGFloat  = 1.0;      // 80% of parent view width
+public let HRToastMaxHeight      :  CGFloat  = 0.8;
+public let HRToastFontSize       :  CGFloat  = 16.0
+public let HRToastMaxTitleLines              = 0
+public let HRToastMaxMessageLines            = 0
+
+ // shadow appearance
+public let HRToastShadowOpacity  : CGFloat   = 0.8
+public let HRToastShadowRadius   : CGFloat   = 0.0
+public let HRToastShadowOffset   : CGSize    = CGSize(width: CGFloat(4.0), height: CGFloat(4.0))
+
+public let HRToastOpacity        : CGFloat   = 0.9
+public let HRToastCornerRadius   : CGFloat   = 0.0
+
+public var HRToastActivityView: UnsafePointer<UIView>?    =   nil
+public var HRToastTimer: UnsafePointer<Timer>?          =   nil
+public var HRToastView: UnsafePointer<UIView>?            =   nil
+
+
+// Color Scheme
+public let HRAppColor:UIColor = UIColor.init(hexString: "2f3030")
+
+public let HRToastHidesOnTap       =   true
+public let HRToastDisplayShadow    =   false
+
+@IBDesignable
+public class DesignableView: UIView {
+}
+
+@IBDesignable
+public class DesignableButton: UIButton {
+    
+    public override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if imageView != nil {
+            imageEdgeInsets = UIEdgeInsets(top: 5, left: (bounds.width - 15), bottom: 5, right: 5)
+            titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: (imageView?.frame.width)!)
+        }
+    }
+
+    public override var isHighlighted: Bool {
+        didSet {
+            if (isHighlighted) {
+                super.isHighlighted = false
+            }
+        }
+    }
+
+}
+
+@IBDesignable
+public class DesignableTextField: UITextField {
+    
+    @IBInspectable var insetX: CGFloat = 0
+    @IBInspectable var insetY: CGFloat = 0
+    
+    // placeholder position
+    public override func textRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.insetBy(dx: insetX, dy: insetY)
+    }
+    
+    // text position
+    public override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        return bounds.insetBy(dx: insetX, dy: insetY)
+    }
+}
+public class TopAlignedLabel: UILabel {
+    public override func drawText(in rect: CGRect) {
+        if let stringText = text {
+            let stringTextAsNSString = stringText as NSString
+            let labelStringSize = stringTextAsNSString.boundingRect(with:
+                CGSize(width: self.frame.width,height: CGFloat.greatestFiniteMagnitude),
+                options: NSStringDrawingOptions.usesLineFragmentOrigin,
+                attributes: [NSAttributedString.Key.font: font as Any],
+                context: nil).size
+            super.drawText(in: CGRect(x:0,y: 0,width: self.frame.width, height:ceil(labelStringSize.height)))
+        } else {
+            super.drawText(in: rect)
+        }
+    }
+    public override func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.black.cgColor
+    }
+}
+
+@IBDesignable
+public class DesignableLabel: UILabel {
+    var textInsets = UIEdgeInsets.zero {
+        didSet { invalidateIntrinsicContentSize() }
+    }
+    
+    @IBInspectable
+    var leftTextInset: CGFloat {
+        set { textInsets.left = newValue }
+        get { return textInsets.left }
+    }
+    
+    @IBInspectable
+    var rightTextInset: CGFloat {
+        set { textInsets.right = newValue }
+        get { return textInsets.right }
+    }
+    
+    @IBInspectable
+    var topTextInset: CGFloat {
+        set { textInsets.top = newValue }
+        get { return textInsets.top }
+    }
+    
+    @IBInspectable
+    var bottomTextInset: CGFloat {
+        set { textInsets.bottom = newValue }
+        get { return textInsets.bottom }
+    }
+    
+    public override func textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
+        let insetRect = bounds.inset(by: textInsets)
+        let textRect = super.textRect(forBounds: insetRect, limitedToNumberOfLines: numberOfLines)
+        let invertedInsets = UIEdgeInsets(top: -textInsets.top,
+                                          left: -textInsets.left,
+                                          bottom: -textInsets.bottom,
+                                          right: -textInsets.right)
+        return textRect.inset(by: invertedInsets)
+    }
+    
+    public override func drawText(in rect: CGRect) {
+        super.drawText(in: rect.inset(by: textInsets))
+    }
+}
+
+@IBDesignable
+public class DesignableImageView: UIImageView {
+}
+
+@IBDesignable public class ButtonCustomWithRightImage: UIButton {
+    
+    public override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        if imageView != nil {
+            imageEdgeInsets = UIEdgeInsets(top: 5, left: (bounds.width - 18), bottom: 5, right: 5)
+            titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: ((imageView?.frame.width)! + 5))
+        }
+    }
+    public override var isHighlighted: Bool {
+        didSet {
+            if (isHighlighted) {
+                super.isHighlighted = false
+            }
+        }
+    }
+}
+
+
+public enum ViewBorder: String {
+    case left, right, top, bottom
+}
+
+public extension UIView {
+    
+    func add(border: ViewBorder, color: UIColor, width: CGFloat) {
+        let borderLayer = CALayer()
+        borderLayer.backgroundColor = color.cgColor
+        borderLayer.name = border.rawValue
+        switch border {
+        case .left:
+            borderLayer.frame = CGRect(x: 0, y: 0, width: width, height: self.frame.size.height)
+        case .right:
+            borderLayer.frame = CGRect(x: self.frame.size.width - width, y: 0, width: width, height: self.frame.size.height)
+        case .top:
+            borderLayer.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: width)
+        case .bottom:
+            borderLayer.frame = CGRect(x: 0, y: self.frame.size.height - width, width: self.frame.size.width, height: width)
+        }
+        self.layer.addSublayer(borderLayer)
+    }
+    
+    func remove(border: ViewBorder) {
+        guard let sublayers = self.layer.sublayers else { return }
+        var layerForRemove: CALayer?
+        for layer in sublayers {
+            if layer.name == border.rawValue {
+                layerForRemove = layer
+            }
+        }
+        if let layer = layerForRemove {
+            layer.removeFromSuperlayer()
+        }
+    }
+    
+}
+
+public extension UIView {
+   
+       
+    func bound() {
+        self.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0,
+            usingSpringWithDamping: 0.3,
+            initialSpringVelocity: 0.1,
+            options: UIView.AnimationOptions.beginFromCurrentState,
+            animations: {
+                self.transform = CGAffineTransform(scaleX: 1, y: 1)
+        })
+    }
+    
+    func gone() {
+        DispatchQueue.main.async {
+            self.isHidden = true
+        }
+    }
+    
+    func visible() {
+        DispatchQueue.main.async {
+            self.isHidden = false
+        }
+    }
+    
+    var isGone: Bool {
+        return self.isHidden == true
+    }
+    
+    var isVisible: Bool {
+        return self.isHidden == false
+    }
+    
+    @IBInspectable
+    var circular: Bool {
+        get {
+            return false
+        }
+        set {
+            layer.cornerRadius = min(bounds.width, bounds.height) / 2
+        }
+    }
+    
+    @IBInspectable
+    var cornerRadius: CGFloat {
+        get {
+            return layer.cornerRadius
+        }
+        set {
+            layer.cornerRadius = newValue
+        }
+    }
+    
+    @IBInspectable
+    var cornerAllRadius: CGFloat {
+        get {
+            return layer.cornerRadius
+        }
+        set {
+            layer.cornerRadius = newValue
+            if #available(iOS 11.0, *) {
+                layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+    }
+    
+    @IBInspectable
+     var cornerTopRadius: CGFloat {
+        get {
+            return layer.cornerRadius
+        }
+        set {
+            layer.cornerRadius = newValue
+            if #available(iOS 11.0, *) {
+                layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+    }
+    
+    @IBInspectable
+     var cornerBottomRadius: CGFloat {
+        get {
+            return layer.cornerRadius
+        }
+        set {
+            layer.cornerRadius = newValue
+            if #available(iOS 11.0, *) {
+                layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+    }
+    
+    @IBInspectable
+     var cornerLeftRadius: CGFloat {
+        get {
+            return layer.cornerRadius
+        }
+        set {
+            layer.cornerRadius = newValue
+            if #available(iOS 11.0, *) {
+                layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+    }
+    
+    @IBInspectable
+     var cornerRightRadius: CGFloat {
+        get {
+            return layer.cornerRadius
+        }
+        set {
+            layer.cornerRadius = newValue
+            if #available(iOS 11.0, *) {
+                layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+    }
+    
+    @IBInspectable
+     var borderWidth: CGFloat {
+        get {
+            return layer.borderWidth
+        }
+        set {
+            layer.borderWidth = newValue
+        }
+    }
+    
+    @IBInspectable
+     var borderColor: UIColor? {
+        get {
+            if let color = layer.borderColor {
+                return UIColor(cgColor: color)
+            }
+            return nil
+        }
+        set {
+            if let color = newValue {
+                layer.borderColor = color.cgColor
+            } else {
+                layer.borderColor = nil
+            }
+        }
+    }
+    
+    @IBInspectable
+     var shadowRadius: CGFloat {
+        get {
+            return layer.shadowRadius
+        }
+        set {
+            layer.shadowRadius = newValue
+        }
+    }
+    
+    @IBInspectable
+     var shadowOpacity: Float {
+        get {
+            return layer.shadowOpacity
+        }
+        set {
+            layer.shadowOpacity = newValue
+        }
+    }
+    
+    @IBInspectable
+     var shadowOffset: CGSize {
+        get {
+            return layer.shadowOffset
+        }
+        set {
+            layer.shadowOffset = newValue
+        }
+    }
+    
+    @IBInspectable
+     var shadowColor: UIColor? {
+        get {
+            if let color = layer.shadowColor {
+                return UIColor(cgColor: color)
+            }
+            return nil
+        }
+        set {
+            if let color = newValue {
+                layer.shadowColor = color.cgColor
+            } else {
+                layer.shadowColor = nil
+            }
+        }
+    }
+    
+    @IBInspectable
+    /// Corner radius of view; also inspectable from Storyboard.
+    var maskToBounds: Bool {
+        get {
+            return layer.masksToBounds
+        }
+        set {
+            layer.masksToBounds = newValue
+        }
+    }
+    
+    func dashStyle(){
+        self.layer.layoutIfNeeded()
+        let shapeLayer = CAShapeLayer()
+        let selfBounds = self.frame.size
+        
+        let newBounds = CGRect(x: 0, y: 0, width: selfBounds.width, height: selfBounds.height)
+        
+        
+        shapeLayer.name = "dash"
+        shapeLayer.position = CGPoint(x: selfBounds.width / 2, y: selfBounds.height / 2)
+        shapeLayer.fillColor = nil
+        shapeLayer.strokeColor =  UIColor.gray.cgColor
+        shapeLayer.lineWidth = 1
+        shapeLayer.lineJoin = CAShapeLayerLineJoin.round
+        shapeLayer.lineDashPattern = [4, 2]
+        self.layer.addSublayer(shapeLayer)
+        shapeLayer.bounds = newBounds
+        shapeLayer.path = UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: newBounds.width, height: newBounds.height), cornerRadius: self.cornerRadius).cgPath
+    }
+}
+
