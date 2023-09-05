@@ -15,8 +15,9 @@ public class TechTalk_Library {
         viewController.present(alertController, animated: true, completion: nil)
     }
     
-    public func customAlert(alertTitle: String, alertMs: String,statusIcon : String){
-        let customAlert = CustomAlertVC()
+    public func customAlert(alertTitle: String, alertMs: String,statusIcon : String, vc: UIViewController){
+//        let customAlert = CustomAlertVC()
+        let customAlert = vc.VC(sbName: "CustomAlertVC", identifier: "CustomAlertVC") as! CustomAlertVC
         customAlert.alertTitle = alertTitle
         customAlert.alertMessage = alertMs
         customAlert.alertTag = 2
@@ -25,6 +26,8 @@ public class TechTalk_Library {
         customAlert.statusImage = UIImage.init(named: statusIcon)
         customAlert.delegate = self
         customAlert.show()
+        let nav = UINavigationController(rootViewController: customAlert)
+        vc.present(nav, animated: true)
     }
     
 }
@@ -2064,5 +2067,89 @@ public extension Array where Element: Hashable {
     }
 }
 
-// MARK: -
+// MARK: - UIViewController
 
+public extension UIViewController {
+   
+    func PopupVC(storyboard: String, identifier: String) -> UIViewController {
+        let vc = UIStoryboard(name: storyboard, bundle: nil).instantiateViewController(withIdentifier: identifier)
+        vc.modalPresentationStyle = .custom
+        vc.modalTransitionStyle = .crossDissolve
+        vc.providesPresentationContextTransitionStyle = true
+        vc.definesPresentationContext = true
+        return vc
+    }
+    
+    func VC(sbName: String, identifier: String) -> UIViewController {
+        return UIStoryboard(name: sbName, bundle: nil).instantiateViewController(withIdentifier: identifier)
+    }
+    
+    func navController(sbName: String, identifier: String) -> UINavigationController {
+        return UIStoryboard(name: sbName, bundle: nil).instantiateViewController(withIdentifier: identifier) as! UINavigationController
+    }
+    
+    func popupVcFullScreen(storyboard: String, identifier: String) -> UIViewController {
+        let vc = UIStoryboard(name: storyboard, bundle: nil).instantiateViewController(withIdentifier: identifier)
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        vc.providesPresentationContextTransitionStyle = true
+        vc.definesPresentationContext = true
+        return vc
+    }
+    
+    func convertStr12toStr25(_ str12: String) -> String {
+        if str12.isEmpty {
+            return "000000"
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HHmmss"
+        if str12.count == 4 {
+            dateFormatter.dateFormat = "hhmm"
+        }
+        else {
+            dateFormatter.dateFormat = "hmmss"
+        }
+        
+        guard let date = dateFormatter.date(from: str12) else {
+            return "000000"
+        }
+        dateFormatter.dateFormat = "HHmmss"
+        let date24 = dateFormatter.string(from: date)
+        return date24
+    }
+    
+    
+    func hightlightSearchText(fullText: String, searchText: String, fontSize: CGFloat, colorHex: String = "3E4449") -> NSMutableAttributedString {
+        
+        //process highlight color on search result
+        var managerNameMutableString = NSMutableAttributedString()
+        managerNameMutableString = NSMutableAttributedString(string: searchText, attributes: [NSAttributedString.Key.font: UIFont.init(name: "AppleSDGothicNeo-SemiBold", size: fontSize)!])
+        managerNameMutableString.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.init(hexString: colorHex)], range: NSMakeRange(0,searchText.count))
+        
+        let range : NSRange = (searchText as NSString).range(of: fullText, options:.caseInsensitive)
+        managerNameMutableString.setAttributes([NSAttributedString.Key.font: UIFont.init(name: "AppleSDGothicNeo-SemiBold", size: fontSize)!,NSAttributedString.Key.foregroundColor: UIColor.base], range: range)
+        return managerNameMutableString
+    }
+    
+    func attrColor(labelFullText: UILabel, searchText: String) -> NSMutableAttributedString {
+        let range = ((labelFullText.text ?? "") as NSString).range(of: searchText)
+        let attributedString = NSMutableAttributedString(string: labelFullText.text ?? "")
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor(red: 39, green: 107, blue: 252), range: range)
+        
+        attributedString.addAttribute(NSAttributedString.Key.font, value: UIFont.systemFont(ofSize: labelFullText.font.pointSize, weight: .regular), range: range)
+        
+        return attributedString
+    }
+    
+    func attrColorWelcome(labelFullText: UILabel, searchText: String,color:UIColor) -> NSMutableAttributedString {
+        let range = ((labelFullText.text ?? "") as NSString).range(of: searchText)
+        let attributedString = NSMutableAttributedString(string: labelFullText.text ?? "")
+        attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value:color, range: range)
+        
+        attributedString.addAttribute(NSAttributedString.Key.font, value: UIFont.init(name: "AppleSDGothicNeo-Medium", size: 22) as Any, range: range)
+        
+        return attributedString
+    }
+    
+    
+}
