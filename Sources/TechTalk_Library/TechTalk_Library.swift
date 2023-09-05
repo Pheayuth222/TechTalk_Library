@@ -15,35 +15,90 @@ public class TechTalk_Library {
         viewController.present(alertController, animated: true, completion: nil)
     }
     
-    public func alertCustom() {
-        let customAlert = CustomAlertVC()
-        customAlert.alertTitle = "Logout"
-        customAlert.alertMessage = "Do you want to logout?"
-        customAlert.alertTag = 2
-        customAlert.okButtonTitle = "Yes"
-        customAlert.cancelButtonTitle = "No"
-        customAlert.statusImage = UIImage.init(named: "logout")
-        customAlert.delegate = self
-        customAlert.show()
-    }
+//    public func alertCustom() {
+//        let customAlert = CustomAlertVC()
+//        customAlert.alertTitle = "Logout"
+//        customAlert.alertMessage = "Do you want to logout?"
+//        customAlert.alertTag = 2
+//        customAlert.okButtonTitle = "Yes"
+//        customAlert.cancelButtonTitle = "No"
+//        customAlert.statusImage = UIImage.init(named: "logout")
+//        customAlert.delegate = self
+//        customAlert.show()
+//    }
     
 }
 
-extension TechTalk_Library: CustomAlertDelegate {
-    public func okButtonAction(_ alert: CustomAlertVC, alertTag: Int) {
-        if alertTag == 1 {
-            print("Single button alert: Ok button pressed")
+public protocol CustomAlertDelegate: AnyObject {
+    func okButtonAction(_ alert: CustomAlertVC, alertTag: Int)
+    func cancelButtonAction(_ alert: CustomAlertVC, alertTag: Int)
+}
+
+public class CustomAlertVC: UIViewController {
+    
+    weak var delegate : CustomAlertDelegate?
+    
+    public var alertTag = 0
+    public var isCancelBtnHidden = false
+    public var alertTitle = ""
+    public var alertMessage = ""
+    public var okButtonTitle = "Ok"
+    public var cancelButtonTitle = "Cancel"
+    public var statusImage = UIImage.init(named: "smiley")
+    
+    @IBOutlet weak var okButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var messegeLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var alertView: UIView!
+    
+    init() {
+        super.init(nibName: "CustomAlertVC", bundle: Bundle(for: CustomAlertVC.self))
+        self.modalPresentationStyle = .overCurrentContext
+        self.modalTransitionStyle = .crossDissolve
+        
+    }
+    
+    required public init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        setupAlert()
+    }
+    
+    public func show() {
+        if #available(iOS 13, *) {
+            UIApplication.shared.windows.first?.rootViewController?.present(self, animated: true, completion: nil)
         } else {
-            print("Two button alert: Ok button pressed")
+            UIApplication.shared.keyWindow?.rootViewController!.present(self, animated: true, completion: nil)
         }
-        print(alert.alertTitle)
     }
     
-    public func cancelButtonAction(_ alert: CustomAlertVC, alertTag: Int) {
-        print("Cancel button pressed")
+    public func setupAlert() {
+        titleLabel.text = alertTitle
+        messegeLabel.text = alertMessage
+        iconImageView.image = statusImage
+        okButton.setTitle(okButtonTitle, for: .normal)
+        cancelButton.setTitle(cancelButtonTitle, for: .normal)
+        cancelButton.isHidden = isCancelBtnHidden
     }
-}
+    
+    
+    @IBAction func cancelAction(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+        delegate?.cancelButtonAction(self, alertTag: alertTag)
+    }
+    
+    @IBAction func okAction(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+        delegate?.okButtonAction(self, alertTag: alertTag)
+    }
+    
 
+}
 
 
 public extension Date {
