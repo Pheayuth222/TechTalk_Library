@@ -15,20 +15,34 @@ public class TechTalk_Library {
         viewController.present(alertController, animated: true, completion: nil)
     }
     
-//    public func alertCustom() {
-//        let customAlert = CustomAlertVC()
-//        customAlert.alertTitle = "Logout"
-//        customAlert.alertMessage = "Do you want to logout?"
-//        customAlert.alertTag = 2
-//        customAlert.okButtonTitle = "Yes"
-//        customAlert.cancelButtonTitle = "No"
-//        customAlert.statusImage = UIImage.init(named: "logout")
-//        customAlert.delegate = self
-//        customAlert.show()
-//    }
+    public func alertCustom() {
+        let customAlert = CustomAlertVC()
+        customAlert.alertTitle = "Logout"
+        customAlert.alertMessage = "Do you want to logout?"
+        customAlert.alertTag = 2
+        customAlert.okButtonTitle = "Yes"
+        customAlert.cancelButtonTitle = "No"
+        customAlert.statusImage = UIImage.init(named: "logout")
+        customAlert.delegate = self
+        customAlert.show()
+    }
     
 }
 
+extension TechTalk_Library: CustomAlertDelegate {
+    public func okButtonAction(_ alert: CustomAlertVC, alertTag: Int) {
+        if alertTag == 1 {
+            print("Single button alert: Ok button pressed")
+        } else {
+            print("Two button alert: Ok button pressed")
+        }
+        print(alert.alertTitle)
+    }
+    
+    public func cancelButtonAction(_ alert: CustomAlertVC, alertTag: Int) {
+        print("Cancel button pressed")
+    }
+}
 
 
 
