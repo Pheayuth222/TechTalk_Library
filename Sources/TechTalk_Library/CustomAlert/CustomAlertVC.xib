@@ -11,12 +11,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomAlertVC" customModuleProvider="target">
             <connections>
-                <outlet property="alertView" destination="yae-8s-bOB" id="zcX-25-IkQ"/>
-                <outlet property="cancelButton" destination="3eD-oS-6Xp" id="ZjO-N2-m2E"/>
-                <outlet property="iconImageView" destination="DRA-ug-T0f" id="6tt-3j-SSS"/>
-                <outlet property="messegeLabel" destination="cKD-8B-meU" id="Wl7-Ql-pPs"/>
-                <outlet property="okButton" destination="aMp-cs-8Uw" id="hR7-hM-PHm"/>
-                <outlet property="titleLabel" destination="jrd-sY-78p" id="vZa-fU-Ffi"/>
+                <outlet property="alertView" destination="yae-8s-bOB" id="8zy-pY-TXC"/>
+                <outlet property="cancelButton" destination="3eD-oS-6Xp" id="FCq-Dq-zwa"/>
+                <outlet property="iconImageView" destination="DRA-ug-T0f" id="j7a-UN-dLD"/>
+                <outlet property="messegeLabel" destination="cKD-8B-meU" id="BXk-qW-WoD"/>
+                <outlet property="okButton" destination="aMp-cs-8Uw" id="LHu-gf-K5x"/>
+                <outlet property="titleLabel" destination="jrd-sY-78p" id="D7f-k0-fDM"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -83,7 +83,7 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                     <connections>
-                                        <action selector="cancelAction:" destination="-1" eventType="touchUpInside" id="Aym-iq-mJh"/>
+                                        <action selector="cancelAction:" destination="-1" eventType="touchUpInside" id="acT-EP-buu"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aMp-cs-8Uw" userLabel="Btn_Ok">
@@ -108,7 +108,7 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                     <connections>
-                                        <action selector="okAction:" destination="-1" eventType="touchUpInside" id="N1M-dB-URv"/>
+                                        <action selector="okAction:" destination="-1" eventType="touchUpInside" id="ggR-0E-gub"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -136,7 +136,7 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" white="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" systemColor="systemIndigoColor"/>
             <constraints>
                 <constraint firstItem="yae-8s-bOB" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="8Rj-8h-x0t"/>
                 <constraint firstItem="yae-8s-bOB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="Pom-a6-asX"/>
@@ -149,6 +149,9 @@
         <image name="smiley" width="35" height="35"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemIndigoColor">
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

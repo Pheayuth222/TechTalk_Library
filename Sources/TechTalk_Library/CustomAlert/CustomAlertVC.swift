@@ -32,6 +32,17 @@ class CustomAlertVC: UIViewController {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var alertView: UIView!
     
+    init() {
+        super.init(nibName: "CustomAlertVC", bundle: Bundle(for: CustomAlertVC.self))
+        self.modalPresentationStyle = .overCurrentContext
+        self.modalTransitionStyle = .crossDissolve
+        
+    }
+    
+    required public init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupAlert()
