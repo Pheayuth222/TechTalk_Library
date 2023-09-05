@@ -1,6 +1,6 @@
 import UIKit
 
-public struct TechTalk_Library {
+public class TechTalk_Library {
     
     
     public init() {
@@ -15,6 +15,33 @@ public struct TechTalk_Library {
         viewController.present(alertController, animated: true, completion: nil)
     }
     
+    public func customAlert(alertTitle: String, alertMs: String,statusIcon : String){
+        let customAlert = CustomAlertVC()
+        customAlert.alertTitle = alertTitle
+        customAlert.alertMessage = alertMs
+        customAlert.alertTag = 2
+        customAlert.okButtonTitle = "Yes"
+        customAlert.cancelButtonTitle = "No"
+        customAlert.statusImage = UIImage.init(named: statusIcon)
+        customAlert.delegate = self
+        customAlert.show()
+    }
+    
+}
+
+extension TechTalk_Library: CustomAlertDelegate {
+    func okButtonAction(_ alert: CustomAlertVC, alertTag: Int) {
+        if alertTag == 1 {
+            print("Single button alert: Ok button pressed")
+        } else {
+            print("Two button alert: Ok button pressed")
+        }
+        print(alert.alertTitle)
+    }
+    
+    func cancelButtonAction(_ alert: CustomAlertVC, alertTag: Int) {
+        print("Cancel button pressed")
+    }
     
 }
 

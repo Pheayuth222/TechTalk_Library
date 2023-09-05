@@ -4,7 +4,6 @@ A description of this package.
 
 <h2>Welcome to TechTalk 2023</h2>
 <h4>Helpers that you can use: </h4>
-<br>
 <ul>
   <li>Date Extension </li>
   <li>UIColor Extension</li>
@@ -15,3 +14,6 @@ A description of this package.
   <li>Device Types</li>
   <li>Other...</li>
 </ul>
+
+<br>
+
