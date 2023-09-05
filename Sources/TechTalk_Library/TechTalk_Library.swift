@@ -1,6 +1,6 @@
 import UIKit
 
-public struct TechTalk_Library {
+public class TechTalk_Library {
     
     
     public init() {
@@ -15,8 +15,21 @@ public struct TechTalk_Library {
         viewController.present(alertController, animated: true, completion: nil)
     }
     
+//    public func alertCustom() {
+//        let customAlert = CustomAlertVC()
+//        customAlert.alertTitle = "Logout"
+//        customAlert.alertMessage = "Do you want to logout?"
+//        customAlert.alertTag = 2
+//        customAlert.okButtonTitle = "Yes"
+//        customAlert.cancelButtonTitle = "No"
+//        customAlert.statusImage = UIImage.init(named: "logout")
+//        customAlert.delegate = self
+//        customAlert.show()
+//    }
     
 }
+
+
 
 
 public extension Date {
