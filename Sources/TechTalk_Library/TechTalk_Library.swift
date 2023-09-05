@@ -43,14 +43,13 @@ public class CustomAlertVC: UIViewController {
     
     weak var delegate : CustomAlertDelegate?
     
-    var alertTag = 0
-    var isCancelBtnHidden = false
-    
-    var alertTitle = ""
-    var alertMessage = ""
-    var okButtonTitle = "Ok"
-    var cancelButtonTitle = "Cancel"
-    var statusImage = UIImage.init(named: "smiley")
+    public var alertTag = 0
+    public var isCancelBtnHidden = false
+    public var alertTitle = ""
+    public var alertMessage = ""
+    public var okButtonTitle = "Ok"
+    public var cancelButtonTitle = "Cancel"
+    public var statusImage = UIImage.init(named: "smiley")
     
     @IBOutlet weak var okButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
@@ -75,7 +74,7 @@ public class CustomAlertVC: UIViewController {
         setupAlert()
     }
     
-    func show() {
+    public func show() {
         if #available(iOS 13, *) {
             UIApplication.shared.windows.first?.rootViewController?.present(self, animated: true, completion: nil)
         } else {
@@ -83,7 +82,7 @@ public class CustomAlertVC: UIViewController {
         }
     }
     
-    func setupAlert() {
+    public func setupAlert() {
         titleLabel.text = alertTitle
         messegeLabel.text = alertMessage
         iconImageView.image = statusImage
