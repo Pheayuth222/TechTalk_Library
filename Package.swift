@@ -15,7 +15,7 @@ let package = Package(
             targets: ["TechTalk_Library"]),
         .library(
             name: "CustomAlertUI",
-            targets: ["TechTalk_Library"]),
+            targets: ["CustomAlertUI"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -27,7 +27,7 @@ let package = Package(
         .target(
             name: "TechTalk_Library",
             dependencies: []),
-        .target(name: "CustomAlertUI", dependencies: ["CustomAlertUI"],
+        .target(name: "CustomAlertUI", dependencies: ["TechTalk_Library"],
                 resources: [
                     .process("Resources/CustomAlertVC_iOS.xib")])
     ]
