@@ -23,6 +23,7 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "TechTalk_Library",
-            dependencies: []),
+            dependencies: [],
+            resources: [.process("TechTalk_Library/CustomAlertVC_iOS.xib")]),
     ]
 )
